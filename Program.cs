@@ -19,5 +19,5 @@ static int Day1()
         current += value;
     }
 
-    return max;
+    return max > current ? max : current;
 }
