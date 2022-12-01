@@ -3,7 +3,7 @@
 for (int i = 1; i <= 25; i++)
 {
     MethodInfo? getAnswersMethod = Type.GetType($"Solutions.Day{i}")?.GetMethod("GetAnswers");
-    object? result = getAnswersMethod?.Invoke(null, new object[] { $"inputs/{i}.txt" });
+    object? result = getAnswersMethod?.Invoke(null, new object[] { $"Inputs/{i}.txt" });
 
     Console.Write($"*** Day {(i < 10 ? " " : "")}{i} ***\t");
 

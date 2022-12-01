@@ -16,6 +16,7 @@ public static class Day1
     {
         var elves = new List<Elf>();
         var currentElf = new Elf();
+        elves.Add(currentElf);
 
         foreach (string line in System.IO.File.ReadLines(filePath))
         {
