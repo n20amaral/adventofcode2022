@@ -1,23 +1,19 @@
-﻿
-Console.WriteLine($"Day 1 : {Day1()}");
+﻿using System.Reflection;
 
-
-static int Day1()
+for (int i = 1; i <= 25; i++)
 {
-    var current = 0;
-    var max = 0;
-    foreach (string line in System.IO.File.ReadLines(@"inputs/1.txt"))
+    Type? type = Type.GetType($"Solutions.Day{i}");
+    MethodInfo? method = type?.GetMethod("GetAnswers");
+    object? result = method?.Invoke(null, new object[] { $"inputs/{i}.txt" });
+
+    Console.Write($"*** Day {(i < 10 ? " " : "")}{i} ***\t");
+
+    if (result == null)
     {
-        if (String.IsNullOrWhiteSpace(line))
-        {
-            max = max > current ? max : current;
-            current = 0;
-            continue;
-        }
-        var value = 0;
-        Int32.TryParse(line, out value);
-        current += value;
+        Console.WriteLine("N/A");
+        continue;
     }
 
-    return max > current ? max : current;
+    var (part1, part2) = ((int, int))result;
+    Console.WriteLine($"Part1: {part1} | Part2: {part2}");
 }
