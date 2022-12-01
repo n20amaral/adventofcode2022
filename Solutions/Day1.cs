@@ -2,21 +2,19 @@ namespace Solutions;
 
 public static class Day1
 {
-    public static (int, int) GetAnswers(string inputFilePath)
+    public static (string, string) GetAnswers(string inputFilePath)
     {
-        var elves = new List<Elf>();
-        LoadElvesFromFile(inputFilePath, elves);
-
-        elves.Sort((a, b) => b.CaloriesTotal - a.CaloriesTotal);
+        var elves = LoadElvesFromFile(inputFilePath);
 
         var mostCaloriesElf = elves.Max(e => e.CaloriesTotal);
-        var top3ElfCaloriesSum = elves.Take(3).Sum(e => e.CaloriesTotal);
+        var top3ElfCaloriesSum = elves.OrderByDescending(e => e.CaloriesTotal).Take(3).Sum(e => e.CaloriesTotal);
 
-        return (mostCaloriesElf, top3ElfCaloriesSum);
+        return (mostCaloriesElf.ToString(), top3ElfCaloriesSum.ToString());
     }
 
-    private static void LoadElvesFromFile(string filePath, IList<Elf> elves)
+    private static IEnumerable<Elf> LoadElvesFromFile(string filePath)
     {
+        var elves = new List<Elf>();
         var currentElf = new Elf();
 
         foreach (string line in System.IO.File.ReadLines(filePath))
@@ -30,6 +28,8 @@ public static class Day1
 
             currentElf.ConsumeCalories(line);
         }
+
+        return elves;
     }
     private class Elf
     {
