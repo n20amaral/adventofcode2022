@@ -43,13 +43,11 @@ This list represents the Calories of the food carried by five Elves:
 
 In case the Elves get hungry and need extra snacks, they need to know which Elf to ask: they'd like to know how many Calories are being carried by the Elf carrying the most Calories. In the example above, this is `24000` (carried by the fourth Elf).
 
-> ### **Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?**
+> ### Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?
 
 ---
 
 ### Part 2
-
----
 
 By the time you calculate the answer to the Elves' question, they've already realized that the Elf carrying the most Calories of food might eventually run out of snacks.
 
@@ -57,7 +55,9 @@ To avoid this unacceptable situation, the Elves would instead like to know the t
 
 In the example above, the top three Elves are the fourth Elf (with `24000` Calories), then the third Elf (with `11000` Calories), then the fifth Elf (with `10000` Calories). The sum of the Calories carried by these three elves is `45000`.
 
-> ### **Find the top three Elves carrying the most Calories. How many Calories are those Elves carrying in total?**
+> ### Find the top three Elves carrying the most Calories. How many Calories are those Elves carrying in total?
+
+---
 
 ## Day 2: Rock Paper Scissors
 
@@ -92,13 +92,11 @@ This strategy guide predicts and recommends the following:
 
 In this example, if you were to follow the strategy guide, you would get a total score of `15` (8 + 1 + 6).
 
-> ### **What would your total score be if everything goes exactly according to your strategy guide?**
+> ### What would your total score be if everything goes exactly according to your strategy guide?
 
 ---
 
 ### Part 2
-
----
 
 The Elf finishes helping with the tent and sneaks back over to you. "Anyway, the second column says how the round needs to end: `X` means you need to lose, `Y` means you need to end the round in a draw, and `Z` means you need to win. Good luck!"
 
@@ -110,4 +108,7 @@ The total score is still calculated in the same way, but now you need to figure 
 
 Now that you're correctly decrypting the ultra top secret strategy guide, you would get a total score of `12`.
 
-> ### **Following the Elf's instructions for the second column, what would your total score be if everything goes exactly according to your strategy guide?**
+> ### Following the Elf's instructions for the second column, what would your total score be if everything goes exactly according to your strategy guide?
+
+---
+
