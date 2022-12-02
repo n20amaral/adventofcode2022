@@ -2,7 +2,7 @@
 
 > Source: [https://adventofcode.com/2022](https://adventofcode.com/2022)
 
-- [Day 1](#day-2-calorie-counting)
+- [Day 1](#day-1-calorie-counting)
 - [Day 2](#day-2-rock-paper-scissors)
 
 ## Day 1: Calorie Counting
@@ -43,7 +43,7 @@ This list represents the Calories of the food carried by five Elves:
 
 In case the Elves get hungry and need extra snacks, they need to know which Elf to ask: they'd like to know how many Calories are being carried by the Elf carrying the most Calories. In the example above, this is `24000` (carried by the fourth Elf).
 
-> **Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?**
+> ### **Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?**
 
 ---
 
@@ -57,7 +57,7 @@ To avoid this unacceptable situation, the Elves would instead like to know the t
 
 In the example above, the top three Elves are the fourth Elf (with `24000` Calories), then the third Elf (with `11000` Calories), then the fifth Elf (with `10000` Calories). The sum of the Calories carried by these three elves is `45000`.
 
-> **Find the top three Elves carrying the most Calories. How many Calories are those Elves carrying in total?**
+> ### **Find the top three Elves carrying the most Calories. How many Calories are those Elves carrying in total?**
 
 ## Day 2: Rock Paper Scissors
 
@@ -67,7 +67,7 @@ The Elves begin to set up camp on the beach. To decide whose tent gets to be clo
 
 Rock Paper Scissors is a game between two players. Each game contains many rounds; in each round, the players each simultaneously choose one of Rock, Paper, or Scissors using a hand shape. Then, a winner for that round is selected: Rock defeats Scissors, Scissors defeats Paper, and Paper defeats Rock. If both players choose the same shape, the round instead ends in a draw.
 
-Appreciative of your help yesterday, one Elf gives you an encrypted strategy guide (your puzzle input) that they say will be sure to help you win. "The first column is what your opponent is going to play: `A` for Rock, `B` for Paper, and `C` for Scissors. The second column--" Suddenly, the Elf is called away to help with someone's tent.
+Appreciative of your help yesterday, one Elf gives you an encrypted strategy guide ([your puzzle input](AoC22/Inputs/2.txt)) that they say will be sure to help you win. "The first column is what your opponent is going to play: `A` for Rock, `B` for Paper, and `C` for Scissors. The second column--" Suddenly, the Elf is called away to help with someone's tent.
 
 The second column, you reason, must be what you should play in response: `X` for Rock, `Y` for Paper, and `Z` for Scissors. Winning every time would be suspicious, so the responses must have been carefully chosen.
 
@@ -92,7 +92,7 @@ This strategy guide predicts and recommends the following:
 
 In this example, if you were to follow the strategy guide, you would get a total score of `15` (8 + 1 + 6).
 
-> **What would your total score be if everything goes exactly according to your strategy guide?**
+> ### **What would your total score be if everything goes exactly according to your strategy guide?**
 
 ---
 
@@ -110,4 +110,4 @@ The total score is still calculated in the same way, but now you need to figure 
 
 Now that you're correctly decrypting the ultra top secret strategy guide, you would get a total score of `12`.
 
-> **Following the Elf's instructions for the second column, what would your total score be if everything goes exactly according to your strategy guide?**
+> ### **Following the Elf's instructions for the second column, what would your total score be if everything goes exactly according to your strategy guide?**
