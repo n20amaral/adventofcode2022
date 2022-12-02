@@ -2,8 +2,8 @@
 
 > Source: [https://adventofcode.com/2022](https://adventofcode.com/2022)
 
-- [Day 1](##day-2-calorie-counting)
-- [Day 2](##day-2-rock-paper-scissors)
+- [Day 1](#day-2-calorie-counting)
+- [Day 2](#day-2-rock-paper-scissors)
 
 ## Day 1: Calorie Counting
 
