@@ -36,11 +36,6 @@ public static class Day1
     {
         private List<int> _calories = new List<int>();
         public int CaloriesTotal => _calories.Sum();
-        public void ConsumeCalories(string calories)
-        {
-            var value = 0;
-            Int32.TryParse(calories, out value);
-            _calories.Add(value);
-        }
+        public void ConsumeCalories(string calories) => _calories.Add(int.Parse(calories));
     }
 }
