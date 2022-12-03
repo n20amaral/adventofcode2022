@@ -4,6 +4,7 @@
 
 - [Day 1](#day-1-calorie-counting)
 - [Day 2](#day-2-rock-paper-scissors)
+- [Day 3](#day-3-rucksack-reorganization)
 
 ## Day 1: Calorie Counting
 
