@@ -4,35 +4,48 @@ public static class Day3
 {
     public static (string, string) GetAnswers(string inputFilePath)
     {
-        var rucksacks = LoadRuckSacks(inputFilePath);
+        var ruckSackGroups = LoadRuckSacks(inputFilePath);
 
-        var part1 = rucksacks.Sum(r => r.SharedPriority);
+        var part1 = ruckSackGroups.Sum(g => g.SharedPriorityTotal);
+        var part2 = ruckSackGroups.Sum(g => g.BadgePriority);
 
-        return (part1.ToString(), String.Empty);
+        return (part1.ToString(), part2.ToString());
     }
 
-    private static IEnumerable<RuckSack> LoadRuckSacks(string filePath)
+    private static IEnumerable<RuckSackGroup> LoadRuckSacks(string filePath)
     {
-        var rucksacks = new List<RuckSack>();
+        var groups = new List<RuckSackGroup>();
+        var currentGroup = new RuckSackGroup();
+        groups.Add(currentGroup);
 
         foreach (var line in System.IO.File.ReadLines(filePath))
         {
-            rucksacks.Add(new RuckSack(line));
+            if (currentGroup.isFull)
+            {
+                currentGroup = new RuckSackGroup();
+                groups.Add(currentGroup);
+            }
+
+            currentGroup.Add(new RuckSack(line));
         }
 
-        return rucksacks;
+        return groups;
     }
 
     private class RuckSack
     {
-        private string _leftCompartiment;
-        private string _rightCompartiment;
+        private IEnumerable<char> _leftCompartiment;
+        private IEnumerable<char> _rightCompartiment;
         public RuckSack(string content)
         {
             (_leftCompartiment, _rightCompartiment) = SplitContent(content);
+            Content = content.ToCharArray();
         }
 
+        public IEnumerable<char> Content { get; private set; }
+        public char Badge { get; set; }
         public int SharedPriority => GetPriority(GetCompartimentIntersection().First());
+        public int BadgePriority => GetPriority(Badge);
 
         private int GetPriority(char itemType)
         {
@@ -45,16 +58,48 @@ public static class Day3
 
         private IEnumerable<char> GetCompartimentIntersection()
         {
-            return _leftCompartiment.ToCharArray().Intersect(_rightCompartiment.ToCharArray());
+            return _leftCompartiment.Intersect(_rightCompartiment);
         }
 
-        private (string, string) SplitContent(string content)
+        private (IEnumerable<char>, IEnumerable<char>) SplitContent(string content)
         {
             var half = content.Length / 2;
             var left = content.Substring(0, half);
             var right = content.Substring(half, half);
 
-            return (left, right);
+            return (left.ToCharArray(), right.ToCharArray());
+        }
+    }
+
+    private class RuckSackGroup
+    {
+        private IList<RuckSack> ruckSacks = new List<RuckSack>();
+        public bool isFull => ruckSacks.Count == 3;
+        public int SharedPriorityTotal => ruckSacks.Sum(r => r.SharedPriority);
+        public int BadgePriority => ruckSacks.First().BadgePriority;
+
+        public void Add(RuckSack ruckSack)
+        {
+            ruckSacks.Add(ruckSack);
+            UpdateBadges();
+        }
+
+        private void UpdateBadges()
+        {
+            var allContents = ruckSacks.Select(r => r.Content).ToList();
+            HashSet<char> uniqueItemTypes = new HashSet<char>(allContents.First());
+
+            foreach (var content in allContents.Skip(1))
+            {
+                uniqueItemTypes.IntersectWith(content);
+            }
+
+            var badge = uniqueItemTypes.First();
+
+            foreach (var ruckSack in ruckSacks)
+            {
+                ruckSack.Badge = badge;
+            }
         }
     }
 }
