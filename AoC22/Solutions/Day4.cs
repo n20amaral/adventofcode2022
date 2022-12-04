@@ -7,8 +7,9 @@ public static class Day4
         var assignmentPairs = LoadAssignments(inputFilePath);
 
         var part1 = assignmentPairs.Where(a => a.IsFullyContained).Count();
+        var part2 = assignmentPairs.Where(a => a.IsOverlapped).Count();
 
-        return (part1.ToString(), String.Empty);
+        return (part1.ToString(), part2.ToString());
     }
 
     private static List<AssignmentPair> LoadAssignments(string filePath)
@@ -41,6 +42,12 @@ public static class Day4
         public bool IsFullyContained =>
         (assignmentOneStart >= assignmentTwoStart && assignmentOneEnd <= assignmentTwoEnd) ||
         (assignmentTwoStart >= assignmentOneStart && assignmentTwoEnd <= assignmentOneEnd);
+
+        public bool IsOverlapped =>
+        (assignmentOneStart >= assignmentTwoStart && assignmentOneStart <= assignmentTwoEnd) ||
+        (assignmentTwoStart >= assignmentOneStart && assignmentTwoStart <= assignmentOneEnd) ||
+        (assignmentOneEnd <= assignmentTwoEnd && assignmentOneEnd >= assignmentTwoStart) ||
+        (assignmentTwoEnd <= assignmentOneEnd && assignmentTwoEnd >= assignmentOneStart);
 
         private (int, int) parseRange(string rangeText)
         {

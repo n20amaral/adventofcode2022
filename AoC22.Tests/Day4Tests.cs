@@ -14,4 +14,13 @@ public class Day4Tests
 
         part1.Should().Be("2");
     }
+
+    [Theory]
+    [InlineData("InputMocks/4.txt")]
+    public void Part2(string input)
+    {
+        var (part1, part2) = Day4.GetAnswers(input);
+
+        part2.Should().Be("4");
+    }
 }
