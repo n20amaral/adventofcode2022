@@ -15,7 +15,8 @@ public static class Day5
     private static Ship LoadShipFromFile(string filePath)
     {
         var containersInfo = new List<string>();
-        Ship ship = null;
+        Ship? ship = null;
+
         foreach (var line in File.ReadLines(filePath))
         {
             if (ship == null)
