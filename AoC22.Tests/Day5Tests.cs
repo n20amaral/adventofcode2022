@@ -14,4 +14,13 @@ public class Day5Tests
 
         part1.Should().Be("CMZ");
     }
+
+    [Theory]
+    [InlineData("InputMocks/5.txt")]
+    public void Part2(string input)
+    {
+        var (part1, part2) = Day5.GetAnswers(input);
+
+        part2.Should().Be("MCD");
+    }
 }
