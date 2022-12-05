@@ -6,9 +6,10 @@ public static class Day5
     {
         var ship = LoadShipFromFile(inputFilePath);
 
-        var part1 = ship.TopContainers();
+        var part1 = ship.SimulateTopContainers(false);
+        var part2 = ship.SimulateTopContainers(true);
 
-        return (string.Concat(part1), String.Empty);
+        return (string.Concat(part1), string.Concat(part2));
     }
 
     private static Ship LoadShipFromFile(string filePath)
@@ -32,10 +33,7 @@ public static class Day5
                 continue;
             }
 
-            var instructions = new string[] { "move", "from", "to" };
-            var instructionValues = line.Split(instructions, StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).Select(v => int.Parse(v)).ToArray();
-
-            ship.RunInstruction(instructionValues[0], instructionValues[1], instructionValues[2]);
+            ship.AddInstruction(line);
         }
 
         return ship ?? new Ship(0);
@@ -59,6 +57,7 @@ public static class Day5
     private class Ship
     {
         private Stack<char>[] _containerStacks;
+        private List<(int, int, int)> _instructions = new List<(int, int, int)>();
 
         public Ship(int numberOfStacks)
         {
@@ -84,19 +83,71 @@ public static class Day5
             }
         }
 
-        public IEnumerable<char> TopContainers()
+        public IEnumerable<char> SimulateTopContainers(bool isCrane9001)
         {
-            return _containerStacks.Select(s => s.Peek()).ToArray();
+            var containerStacksCopy = _containerStacks.Select(s =>
+            {
+                var copy = new char[s.Count];
+                s.CopyTo(copy, 0);
+                Array.Reverse(copy);
+                return new Stack<char>(copy);
+            }).ToArray();
+
+            foreach (var instruction in _instructions)
+            {
+                RunInstruction(instruction, containerStacksCopy, isCrane9001);
+            }
+
+            return containerStacksCopy.Select(s => s.Peek()).ToArray();
         }
 
-        public void RunInstruction(int quantity, int from, int to)
+        public void AddInstruction(string instructionText)
         {
-            var fromContainer = _containerStacks.ElementAt(from - 1);
-            var toContainer = _containerStacks.ElementAt(to - 1);
+            var operations = new string[] { "move", "from", "to" };
+            var values = instructionText
+                .Split(operations, StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
+                .Select(v => int.Parse(v))
+                .ToArray();
 
+            _instructions.Add((values[0], values[1], values[2]));
+        }
+
+        private void RunInstruction((int, int, int) instruction, IEnumerable<Stack<char>> stacks, bool isCrane9001)
+        {
+            var (quantity, from, to) = instruction;
+            var fromContainer = stacks.ElementAt(from - 1);
+            var toContainer = stacks.ElementAt(to - 1);
+
+            if (isCrane9001)
+            {
+                HandleContainers9001(fromContainer, toContainer, quantity);
+            }
+            else
+            {
+                HandleContainers9000(fromContainer, toContainer, quantity);
+            }
+        }
+
+        private void HandleContainers9000(Stack<char> fromContainer, Stack<char> toContainer, int quantity)
+        {
             for (int i = 0; i < quantity; i++)
             {
                 toContainer.Push(fromContainer.Pop());
+            }
+        }
+
+        private void HandleContainers9001(Stack<char> fromContainer, Stack<char> toContainer, int quantity)
+        {
+            var bufferStack = new Stack<char>();
+
+            for (int i = 0; i < quantity; i++)
+            {
+                bufferStack.Push(fromContainer.Pop());
+            }
+
+            for (int i = 0; i < quantity; i++)
+            {
+                toContainer.Push(bufferStack.Pop());
             }
         }
     }
