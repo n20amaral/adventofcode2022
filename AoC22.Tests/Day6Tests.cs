@@ -7,11 +7,11 @@ namespace Tests;
 public class Day6Tests
 {
     [Theory]
-    [InlineData("mjqjpqmgbljsphdztnvjfqwrcgsmlb", "7")]
-    [InlineData("bvwbjplbgvbhsrlpgdmjqwftvncz", "5")]
-    [InlineData("nppdvjthqldpwncqszvftbrmjlhg", "6")]
-    [InlineData("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg", "10")]
-    [InlineData("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw", "11")]
+    [InlineData("InputMocks/6a.txt", "7")]
+    [InlineData("InputMocks/6b.txt", "5")]
+    [InlineData("InputMocks/6c.txt", "6")]
+    [InlineData("InputMocks/6d.txt", "10")]
+    [InlineData("InputMocks/6e.txt", "11")]
 
     public void Part1(string input, string expectedOutput)
     {
