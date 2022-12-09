@@ -15,4 +15,13 @@ public class Day8Tests
 
         part1.Should().Be("21");
     }
+
+    [Theory]
+    [InlineData("InputMocks/8.txt")]
+    public void Part2(string filePath)
+    {
+        var (part1, part2) = Day8.GetAnswers(filePath);
+
+        part2.Should().Be("8");
+    }
 }
