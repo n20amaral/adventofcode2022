@@ -9,8 +9,9 @@ public static class Day9
         RunMovesFromFile(rope, inputFilePath);
 
         var part1 = rope.TailVisitedNodes.Count;
+        var part2 = rope.KnotVisitedNodes.Count;
 
-        return (part1.ToString(), string.Empty);
+        return (part1.ToString(), part2.ToString());
     }
 
     private static void RunMovesFromFile(Rope rope, string filePath)
@@ -24,15 +25,21 @@ public static class Day9
 
 internal class Rope
 {
-    public Rope()
+    public Rope(int knots = 9)
     {
-        TailVisitedNodes = new HashSet<(int, int)>();
         TailVisitedNodes.Add((0, 0));
+        KnotVisitedNodes.Add((0, 0));
+        for (int i = 0; i < knots; i++)
+        {
+            Knots.Add((0, 0));
+        }
     }
 
-    public ISet<(int, int)> TailVisitedNodes { get; internal set; }
+    public ISet<(int, int)> TailVisitedNodes { get; internal set; } = new HashSet<(int, int)>();
+    public ISet<(int, int)> KnotVisitedNodes { get; internal set; } = new HashSet<(int, int)>();
     public (int, int) Head { get; set; } = (0, 0);
     public (int, int) Tail { get; set; } = (0, 0);
+    public IList<(int, int)> Knots = new List<(int, int)>();
 
     public void Move(string line)
     {
@@ -43,7 +50,7 @@ internal class Rope
         {
             MoveHead(move[0]);
             MoveTail(move[0]);
-            TailVisitedNodes.Add(Tail);
+            MoveKnots(move[0]);
         }
     }
 
@@ -72,34 +79,62 @@ internal class Rope
 
     private void MoveTail(string direction)
     {
-        var (headX, headY) = Head;
-        var (tailX, tailY) = Tail;
+        Tail = FollowMove(direction, Head, Tail);
+        TailVisitedNodes.Add(Tail);
+    }
+
+    private void MoveKnots(string direction)
+    {
+        var currentLeader = Head;
+        var nextDirection = direction;
+
+        for (int i = 0; i < Knots.Count; i++)
+        {
+            Knots[i] = FollowMove(nextDirection, currentLeader, Knots[i]);
+            currentLeader = Knots[i];
+        }
+
+        KnotVisitedNodes.Add(Knots.Last());
+    }
+
+    private (int, int) FollowMove(string direction, (int, int) Leader, (int, int) Follower)
+    {
+        var (headX, headY) = Leader;
+        var (tailX, tailY) = Follower;
 
         if (Math.Abs(headX - tailX) < 2 && Math.Abs(headY - tailY) < 2)
         {
-            return;
+            return (tailX, tailY);
         }
 
         switch (direction)
         {
-            case "R":
-                tailY += headY - tailY;
-                tailX++;
-                break;
             case "L":
-                tailY += headY - tailY;
-                tailX--;
+            case "R":
+                if (tailY != headY)
+                {
+                    tailY += headY > tailY ? 1 : -1;
+                }
+
+                if (tailX != headX)
+                {
+                    tailX += headX > tailX ? 1 : -1;
+                }
                 break;
             case "U":
-                tailX += headX - tailX;
-                tailY++;
-                break;
             case "D":
-                tailX += headX - tailX;
-                tailY--;
+                if (tailX != headX)
+                {
+                    tailX += headX > tailX ? 1 : -1;
+                }
+
+                if (tailY != headY)
+                {
+                    tailY += headY > tailY ? 1 : -1;
+                }
                 break;
         }
 
-        Tail = (tailX, tailY);
+        return (tailX, tailY);
     }
 }
